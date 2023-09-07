@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "UI.h"
 
 #include <vector>
 #include <algorithm>
@@ -164,7 +165,7 @@ void Board::RotatePiece(int selectX, int selectY)
 
 void Board::DebugDraw()
 {
-
+	UI ui;
 	int mouseX = 0, mouseY = 0;
 
 	GetMousePoint(&mouseX, &mouseY);
@@ -191,10 +192,8 @@ void Board::DebugDraw()
 	DrawFormatString(0, 48, GetColor(255, 255, 255), "U :  piece generate");
 	DrawFormatString(0, 64, GetColor(255, 255, 255), "R :  reset");
 
-	DrawFormatString(0, 96, GetColor(255, 255, 255), "score : %u", score);
-	DrawFormatString(0, 112, GetColor(255, 255, 255), "generate remain : %u", (spawnTime - flameCount) / 60u);
-	DrawFormatString(0, 128, GetColor(255, 255, 255), "generate rate : %u", spawnTime / 60u);
-	DrawFormatString(0, 144, GetColor(255, 255, 255), "level : %u", level);
+	ui.DrawScore(score);
+	ui.DrawTime((spawnTime - flameCount) / 60u, spawnTime);
 	if (boardStatus == BoardStatus::GAMEOVER) {
 		DrawFormatString(0, 160, GetColor(255, 255, 255), "GAME OVER");
 	}
