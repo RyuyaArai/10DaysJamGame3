@@ -1,5 +1,6 @@
 #pragma once
 #include "PieceData.h"
+#include "UI.h"
 
 #include <array>
 
@@ -73,7 +74,7 @@ private:
 
 
 
-
+	UI ui;
 
 };
 
