@@ -62,7 +62,6 @@ void Board::Update()
 	default:
 		break;
 	}
-
 }
 
 void Board::Draw()
@@ -192,8 +191,8 @@ void Board::DebugDraw()
 	int spawnRemain = (spawnTime - flameCount) / 60u;
 	ui.DrawTime(spawnRemain);
 	if (boardStatus == BoardStatus::GAMEOVER) {
-		ui.Finalize();
-		DrawFormatString(0, 160, GetColor(255, 255, 255), "GAME OVER");
+		ui.DrawGameOver();
+		//ui.Finalize();
 	}
 
 }
@@ -249,8 +248,12 @@ void Board::CheckMatch()
 			//ピース1つにつき加算スコア増加
 			addScore += (baseScore * scoreScale);
 		}
+		int oldScore;
+		oldScore = score;
 		score += addScore;
-
+		if (oldScore != score) {
+			ui.AddScore(addScore);
+		}
 		//スコアが既定値を超えた場合、レベルアップ
 		if (score > level * 10000) {
 			level++;
@@ -259,6 +262,7 @@ void Board::CheckMatch()
 			}
 		}
 	}
+	ui.Update();
 
 	flame++;
 

@@ -14,6 +14,12 @@ public:
 	void DrawScore(int score);
 	void DrawTime(int spawnRemain);
 	void DrawLevel(int level);
+	void DrawScoreRend();
+	void DrawLevUpRend();
+	void DrawGameOver();
+
+	void AddScoreRendition();
+	void LevelUpRendition();
 
 	//init
 	void CreateFontData();
@@ -24,15 +30,19 @@ public:
 	//debug
 	void DebugDraw(int mouseX,int mouseY);
 private:
-	int score;
 	int addScore;
 	int time;
 	int scoreRenditionTime;
 	int levelUpRenditionTime;
-	int fontQuantity = 2;
+	int fontQuantity;
+
+	int renditionColor;
+	int whiteColor;
 	
 	bool isLevelUp;
 	bool isRendition;
+	bool isScoRend;
+	bool isLevRend;
 
 	int fontData[];
 };
