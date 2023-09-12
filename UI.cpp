@@ -30,6 +30,9 @@ void UI::Update()
 	if (isRendition == true) {
 		AddScoreRendition();
 	}
+	if (isLevelUp == true) {
+		LevelUpRendition();
+	}
 
 }
 
@@ -43,12 +46,12 @@ void UI::AddScore(int addScore)
 void UI::LevelUp()
 {
 	isLevelUp = true;
+	isLevRend = true;
 }
 
 void UI::DrawScore(int score)
 {
 	if (isRendition == true) {
-		//スコア加算演出関数入れる
 		DrawScoreRend();
 	}
 	DrawFormatStringToHandle(0, 120, whiteColor, fontData[1], "score : %.8d", score);
@@ -65,25 +68,34 @@ void UI::DrawLevel(int level)
 {
 	DrawFormatStringToHandle(0, 168, whiteColor, fontData[1], "level : %u", level);
 	if (isLevelUp == true) {
-		//レベルアップ演出描画
-		isLevelUp = false;
+		DrawLevUpRend();
 	}
 }
 
 void UI::DrawScoreRend()
 {
 	if (isScoRend) {
-	/*	DrawFormatStringToHandle(0, 96, whiteColor, fontData[1], "+%d", addScore);
-	}
-	else
-	{*/
-		DrawFormatStringToHandle(100, 96, renditionColor, fontData[1], "+%d", addScore);
+		if (scoreRenditionTime % 2) {
+			DrawFormatStringToHandle(100, 96 - scoreRenditionTime, whiteColor, fontData[1], "+%d", addScore);
+		}
+		else
+		{
+			DrawFormatStringToHandle(100, 96 - scoreRenditionTime, renditionColor, fontData[1], "+%d", addScore);
+		}
 	}
 
 }
 
 void UI::DrawLevUpRend()
 {
+	if (isLevRend) {
+		if (levelUpRenditionTime % 2) {
+			DrawFormatStringToHandle(100, 192 + levelUpRenditionTime, whiteColor, fontData[1], "LEVEL UP!");
+		}
+		else {
+			DrawFormatStringToHandle(100, 192 + levelUpRenditionTime, renditionColor, fontData[1], "LEVEL UP!");
+		}
+	}
 }
 
 void UI::DrawGameOver()
@@ -106,12 +118,10 @@ void UI::AddScoreRendition()
 void UI::LevelUpRendition()
 {
 	levelUpRenditionTime++;
-	if (levelUpRenditionTime > 15) {
-		if (!isLevRend) {
-			isLevRend = true;
-		}
-		else {
+	if (levelUpRenditionTime > 30) {
+		if (isLevRend) {
 			isLevRend = false;
+			isLevelUp = false;
 		}
 		levelUpRenditionTime = 0;
 	}
@@ -135,11 +145,11 @@ void UI::Finalize()
 
 void UI::DebugDraw(int mouseX, int mouseY)
 {
-	/*DrawFormatStringToHandle(0, 0, whiteColor, fontData[1], "x %d  y %d", mouseX, mouseY);
-	DrawFormatStringToHandle(0, 24, whiteColor, fontData[1], "WASD :   box move");
-	DrawFormatStringToHandle(0, 48, whiteColor, fontData[1], "space :  piece rotate (反時計回り)");
-	DrawFormatStringToHandle(0, 72, whiteColor, fontData[1], "U :  piece generate");
-	DrawFormatStringToHandle(0, 96, whiteColor, fontData[1], "R :  reset");*/
+	//DrawFormatStringToHandle(0, 0, whiteColor, fontData[1], "x %d  y %d", mouseX, mouseY);
+	//DrawFormatStringToHandle(0, 24, whiteColor, fontData[1], "WASD :   box move");
+	//DrawFormatStringToHandle(0, 48, whiteColor, fontData[1], "space :  piece rotate (反時計回り)");
+	//DrawFormatStringToHandle(0, 72, whiteColor, fontData[1], "U :  piece generate");
+	//DrawFormatStringToHandle(0, 96, whiteColor, fontData[1], "R :  reset");
 	//DrawFormatStringToHandle(0, 0, whiteColor, "x %d  y %d", mouseX, mouseY);
 	/*DrawFormatString(0, 16, whiteColor, "WASD :   box move");
 	DrawFormatString(0, 32, whiteColor, "space :  piece rotate (反時計回り)");

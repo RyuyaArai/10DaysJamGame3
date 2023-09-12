@@ -188,6 +188,7 @@ void Board::DebugDraw()
 
 	ui.DebugDraw(mouseX, mouseY);
 	ui.DrawScore(score);
+	ui.DrawLevel(level);
 	int spawnRemain = (spawnTime - flameCount) / 60u;
 	ui.DrawTime(spawnRemain);
 	if (boardStatus == BoardStatus::GAMEOVER) {
@@ -257,6 +258,7 @@ void Board::CheckMatch()
 		//スコアが既定値を超えた場合、レベルアップ
 		if (score > level * 10000) {
 			level++;
+			ui.LevelUp();
 			if (spawnTime > SPAWNTIME_MIN) {
 				spawnTime -= spawnDifficlutyRate;
 			}
